@@ -6,20 +6,14 @@ function extension(name) {
   return i === -1 ? "" : name.slice(i + 1).toLowerCase();
 }
 
-async function getFolderFiles(folder) {
-  try {
-    const response = await fetch(folder + "/");
-    if (!response.ok) return [];
-    const html = await response.text();
-    const doc = new DOMParser().parseFromString(html, "text/html");
-    return [...doc.querySelectorAll("a")]
-      .map(a => decodeURIComponent(a.getAttribute("href") || ""))
-      .filter(href => href && !href.endsWith("/") && !href.startsWith("?"))
-      .map(href => href.split("/").pop())
-      .filter(Boolean);
-  } catch {
-    return [];
-  }
+async function getMedia() {
+  const response = await fetch("media.json", { cache: "no-store" });
+  if (!response.ok) throw new Error("media.json: " + response.status);
+  const data = await response.json();
+  return {
+    photos: Array.isArray(data.photos) ? data.photos : [],
+    videos: Array.isArray(data.videos) ? data.videos : []
+  };
 }
 
 function renderPhotos(files) {
@@ -59,7 +53,7 @@ function renderVideos(files) {
     const caption = document.createElement("figcaption");
     caption.textContent = file;
     figure.append(video, caption);
-    container.appendChild(figure);
+    container.append(figure);
   });
 }
 
@@ -81,7 +75,15 @@ document.addEventListener("keydown", e => {
 });
 
 (async () => {
-  const [photos, videos] = await Promise.all([getFolderFiles("Foto"), getFolderFiles("Video")]);
-  renderPhotos(photos);
-  renderVideos(videos);
+  try {
+    const media = await getMedia();
+    renderPhotos(media.photos);
+    renderVideos(media.videos);
+  } catch (error) {
+    console.error("Не удалось загрузить media.json", error);
+    document.querySelector("#photoEmpty").textContent = "Не удалось загрузить список фотографий.";
+    document.querySelector("#photoEmpty").classList.remove("hidden");
+    document.querySelector("#videoEmpty").textContent = "Не удалось загрузить список видео.";
+    document.querySelector("#videoEmpty").classList.remove("hidden");
+  }
 })();
