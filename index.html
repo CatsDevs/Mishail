@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mishail — Media Gallery</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <p class="eyebrow">MEDIA GALLERY</p>
+      <h1>Mishail</h1>
+      <p class="subtitle">Фото из <code>Foto/</code> и видео из <code>Video/</code></p>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="section-head">
+        <h2>Фотографии</h2>
+        <span id="photoCount"></span>
+      </div>
+      <div id="gallery" class="gallery"></div>
+      <p id="photoEmpty" class="empty hidden">В папке Foto пока нет изображений.</p>
+    </section>
+
+    <section class="section video-section">
+      <div class="section-head">
+        <h2>Видео</h2>
+        <span id="videoCount"></span>
+      </div>
+      <div id="videos" class="videos"></div>
+      <p id="videoEmpty" class="empty hidden">В папке Video пока нет видео.</p>
+    </section>
+  </main>
+
+  <div id="lightbox" class="lightbox hidden">
+    <button id="closeLightbox" class="close" aria-label="Закрыть">×</button>
+    <img id="lightboxImage" alt="">
+    <p id="lightboxName"></p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
