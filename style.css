@@ -1,0 +1,40 @@
+:root {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #f5f7fb;
+  background: #0b0d12;
+  font-synthesis: none;
+}
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; background: radial-gradient(circle at top, #1a2030 0, #0b0d12 45%); }
+.hero { padding: 64px 6vw 36px; border-bottom: 1px solid #252a36; }
+.eyebrow { margin: 0 0 8px; color: #8f9bb2; font-size: 12px; letter-spacing: .18em; font-weight: 700; }
+h1 { margin: 0; font-size: clamp(42px, 8vw, 76px); letter-spacing: -.05em; }
+.subtitle { color: #aeb6c7; margin: 12px 0 0; font-size: 16px; }
+code { color: #e4e9f2; background: #171b24; padding: 3px 7px; border-radius: 6px; }
+main { width: min(1400px, 92vw); margin: 0 auto; }
+.section { padding: 42px 0; }
+.video-section { border-top: 1px solid #252a36; }
+.section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 18px; }
+h2 { margin: 0; font-size: 25px; }
+.section-head span { color: #7f899c; font-size: 14px; }
+.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 14px; }
+.photo-card { border: 0; padding: 0; background: #151923; border-radius: 12px; overflow: hidden; cursor: pointer; aspect-ratio: 1; }
+.photo-card img { width: 100%; height: 100%; display: block; object-fit: cover; transition: transform .2s, opacity .2s; }
+.photo-card:hover img { transform: scale(1.04); opacity: .9; }
+.videos { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+.video-card { margin: 0; background: #11151e; border: 1px solid #252a36; border-radius: 14px; overflow: hidden; }
+.video-card video { display: block; width: 100%; max-height: 520px; background: #050609; }
+.video-card figcaption { padding: 12px 14px; color: #cbd2df; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.empty { color: #737e92; padding: 28px 0; }
+.hidden { display: none !important; }
+.lightbox { position: fixed; inset: 0; z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; background: rgba(3,5,8,.94); }
+.lightbox img { max-width: 94vw; max-height: 84vh; object-fit: contain; border-radius: 8px; }
+.lightbox p { color: #cbd2df; margin: 12px 0 0; }
+.close { position: absolute; top: 16px; right: 22px; border: 0; background: none; color: white; font-size: 42px; cursor: pointer; line-height: 1; }
+@media (max-width: 600px) {
+  .hero { padding: 42px 5vw 28px; }
+  .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+  .videos { grid-template-columns: 1fr; }
+  .section { padding: 30px 0; }
+  .lightbox { padding: 18px; }
+}
