@@ -23,12 +23,43 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Generate media manifest
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require("fs");
+          const path = require("path");
+
+          const imageExt = new Set(["jpg","jpeg","png","gif","webp","bmp","svg","avif","ico","tif","tiff","jfif"]);
+          const videoExt = new Set(["mp4","webm","ogg","ogv","mov","m4v","avi","mkv"]);
+
+          function filesIn(folder, extensions) {
+            if (!fs.existsSync(folder)) return [];
+            return fs.readdirSync(folder, { withFileTypes: true })
+              .filter(e => e.isFile())
+              .map(e => e.name)
+              .filter(name => extensions.has(path.extname(name).slice(1).toLowerCase()))
+              .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" }));
+          }
+
+          fs.writeFileSync(
+            "media.json",
+            JSON.stringify({
+              photos: filesIn("Foto", imageExt),
+              videos: filesIn("Video", videoExt)
+            }, null, 2) + "\n"
+          );
+          NODE
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: .
+
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
